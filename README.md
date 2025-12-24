@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Build Your Own Company (BYOC)
 
-## Getting Started
+**Don't just hire an agency. Build your company.**
 
-First, run the development server:
+Build Your Own Company (BYOC) is a futuristic, gamified web experience that reimagines the process of hiring a software agency. Instead of filling out boring contact forms, users "build" their company by stacking 3D modules into a glass container.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Features
+
+- **Immersive Introduction**: "Warp Speed" landing page effect.
+- **Interactive Tutorial**: "Holo-Deck" style onboarding with AI guidance.
+- **3D Configurator**: Drag-and-drop or click-to-select interface where choices stack visually as 3D bricks.
+- **Real-Time Physics**: "Snappy" springing animations using Framer Motion.
+- **Dynamic Pricing**: Instant quote calculation based on selected modules.
+- **Detailed Specs**: Hover tooltips reveal technical deliverables for every option.
+- **Blueprint Summary**: A generated "Checkout" invoice with timeline and cost breakdown.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 14+ (App Router)](https://nextjs.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) (Custom "Obsidian" & "Cyber Cyan" Theme)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/) (Layout ID & Springs)
+- **State Management**: [Zustand](https://zustand-demo.pmnd.rs/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+
+## 🏁 Getting Started
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/RahulBonala/Build-your-Own-Company.git
+   cd Build-your-Own-Company
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**:
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📂 Project Structure
+
+```
+src/
+├── app/
+│   ├── page.tsx            # Landing Page (Warp Effect)
+│   ├── tutorial/           # Onboarding (AI Guide)
+│   ├── configurator/       # Main App (3D Box + Supply Dock)
+│   └── checkout/           # Summary & Payment Stub
+├── components/
+│   ├── ThreeDBox.tsx       # Visual Stacking Container
+│   ├── Brick.tsx           # Individual 3D Module
+│   └── SupplyDock.tsx      # Sidebar Selection Menu
+├── store/
+│   └── builderStore.ts     # Global State (Zustand)
+└── utils/
+    └── PricingLogic.js     # Pricing Data & Calculator
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Design System
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Colors**:
+  - `bg-obsidian` (#0B0C10) - Deep Space Black
+  - `text-cyber-cyan` (#66FCF1) - Neon Accent
+  - `text-silver` (#C5C6C7) - Secondary Text
+- **Typography**:
+  - Headings: *Space Grotesk*
+  - Body: *Inter*
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🤝 Contributing
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
