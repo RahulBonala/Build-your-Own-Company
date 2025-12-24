@@ -10,11 +10,11 @@ interface InfoCardProps {
 export const InfoCard = ({ title, description, details }: InfoCardProps) => {
     return (
         <motion.div
-            initial={{ opacity: 0, scale: 0.95, x: -10 }}
+            initial={{ opacity: 0, scale: 0.95, x: 10 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.95, x: -10 }}
+            exit={{ opacity: 0, scale: 0.95, x: 10 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="absolute left-full top-0 ml-4 w-64 p-4 rounded-xl bg-slate-900/90 border border-glass-border backdrop-blur-xl shadow-2xl z-50 pointer-events-none"
+            className="absolute right-full top-0 mr-4 w-64 p-4 rounded-xl bg-slate-900/90 border border-glass-border backdrop-blur-xl shadow-2xl z-50 pointer-events-none"
         >
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-xl pointer-events-none" />
 
