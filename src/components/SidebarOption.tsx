@@ -15,6 +15,14 @@ interface SidebarOptionProps {
 
 export const SidebarOption = ({ optionKey, data, isSelected, onSelect }: SidebarOptionProps) => {
     const [showInfo, setShowInfo] = useState(false);
+    const [cardPos, setCardPos] = useState<{ top: number } | undefined>(undefined);
+
+    const handleMouseEnter = (e: React.MouseEvent) => {
+        // Calculate stable top position based on the element
+        const rect = e.currentTarget.getBoundingClientRect();
+        setCardPos({ top: rect.top + (rect.height / 2) }); // Center of the item
+        setShowInfo(true);
+    };
 
     return (
         <div className="relative group">
@@ -49,10 +57,13 @@ export const SidebarOption = ({ optionKey, data, isSelected, onSelect }: Sidebar
             {/* Info Icon Button - Positioned absolute to not interfere with main click but accessible */}
             <div
                 className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-2 text-gray-500 hover:text-cyan-400 cursor-help transition-colors"
-                onMouseEnter={() => setShowInfo(true)}
+                onMouseEnter={handleMouseEnter}
                 onMouseLeave={() => setShowInfo(false)}
                 onClick={(e) => {
                     e.stopPropagation();
+                    // On mobile touch, calculate position immediately
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    setCardPos({ top: rect.top });
                     setShowInfo(!showInfo);
                 }}
             >
@@ -66,6 +77,7 @@ export const SidebarOption = ({ optionKey, data, isSelected, onSelect }: Sidebar
                         title={data.label}
                         description={data.description}
                         details={data.details}
+                        position={cardPos}
                     />
                 )}
             </AnimatePresence>

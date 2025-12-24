@@ -27,7 +27,7 @@ export const SupplyDock = () => {
     };
 
     return (
-        <div className="w-full h-full bg-slate-900/95 border-l border-glass-border flex flex-col p-6 overflow-y-auto">
+        <div className="w-full h-full bg-slate-900/95 flex flex-col p-6 overflow-y-auto">
             <h2 className="text-xl font-bold font-mono text-white mb-6 tracking-widest uppercase border-b border-glass-border pb-4">
                 Supply Dock
             </h2>

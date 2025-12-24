@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
+import clsx from 'clsx';
 
 interface InfoCardProps {
     title: string;
@@ -7,28 +8,42 @@ interface InfoCardProps {
     details: string[];
 }
 
-export const InfoCard = ({ title, description, details }: InfoCardProps) => {
+export const InfoCard = ({ title, description, details, position }: InfoCardProps & { position?: { top: number } }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, scale: 0.95, x: 10 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.95, x: 10 }}
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="absolute right-full top-0 mr-4 w-64 p-4 rounded-xl bg-slate-900/90 border border-glass-border backdrop-blur-xl shadow-2xl z-50 pointer-events-none"
+            style={{
+                top: position?.top // Only applies on desktop where we use top
+            }}
+            className={clsx(
+                // Mobile: Fixed at bottom, full width, rounded top only
+                "fixed bottom-0 left-0 w-full p-6 rounded-t-xl bg-slate-900/95 border-t border-glass-border backdrop-blur-xl shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-[100]",
+                // Desktop (lg): Fixed to the left of the sidebar, vertically aligned, rounded full
+                "lg:bottom-auto lg:right-[40%] lg:mr-4 lg:w-72 lg:rounded-xl lg:border lg:shadow-2xl lg:-translate-y-1/2"
+            )}
         >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-xl pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent mobile:rounded-t-xl lg:rounded-xl pointer-events-none" />
 
-            <h3 className="text-white font-bold text-lg mb-1 relative z-10">{title}</h3>
-            <p className="text-cyan-400 text-xs font-mono mb-3 uppercase tracking-wider relative z-10">{description}</p>
+            <div className="relative z-10 flex flex-col gap-2">
+                <div>
+                    <h3 className="text-white font-bold text-lg leading-tight">{title}</h3>
+                    <p className="text-cyan-400 text-xs font-mono uppercase tracking-wider">{description}</p>
+                </div>
 
-            <ul className="space-y-2 relative z-10">
-                {details.map((detail, index) => (
-                    <li key={index} className="text-gray-300 text-xs flex items-start gap-2 leading-relaxed">
-                        <span className="text-cyan-500 mt-0.5">•</span>
-                        {detail}
-                    </li>
-                ))}
-            </ul>
+                <div className="h-px bg-white/10 w-full my-1" />
+
+                <ul className="space-y-2">
+                    {details.map((detail, index) => (
+                        <li key={index} className="text-gray-300 text-sm flex items-start gap-2 leading-relaxed">
+                            <span className="text-cyan-500 mt-1">•</span>
+                            {detail}
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </motion.div>
     );
 };

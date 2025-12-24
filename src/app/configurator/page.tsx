@@ -14,46 +14,46 @@ export default function ConfiguratorPage() {
     const isReady = Object.values(selections).every(Boolean);
 
     return (
-        <div className="w-full h-screen bg-obsidian flex overflow-hidden">
-            {/* Left Stage - 60% */}
-            <div className="w-[60%] h-full relative flex flex-col items-center justify-center p-8">
+        <div className="w-full h-screen bg-obsidian flex flex-col lg:flex-row overflow-hidden lg:overflow-hidden overflow-y-auto">
+            {/* Left Stage - 60% on Desktop, Full on Mobile */}
+            <div className="w-full lg:w-[60%] min-h-[50vh] lg:h-full relative flex flex-col items-center justify-center p-8 shrink-0">
                 <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-800/20 via-obsidian to-obsidian pointer-events-none" />
 
                 {/* Header / Idea */}
-                <div className="absolute top-8 left-8 z-10">
-                    <h1 className="text-3xl font-black text-white tracking-tighter">
-                        BUILD YOUR OWN <span className="text-cyber-cyan">COMPANY (BYOC)</span>
+                <div className="absolute top-4 left-4 lg:top-8 lg:left-8 z-10 pointer-events-none lg:pointer-events-auto">
+                    <h1 className="text-xl lg:text-3xl font-black text-white tracking-tighter">
+                        BUILD YOUR OWN <span className="text-cyber-cyan block lg:inline">COMPANY</span>
                     </h1>
                     {idea && (
-                        <div className="mt-2 text-sm text-gray-400 font-mono border-l-2 border-cyber-cyan pl-3">
+                        <div className="mt-2 text-xs lg:text-sm text-gray-400 font-mono border-l-2 border-cyber-cyan pl-3">
                             Project: {idea}
                         </div>
                     )}
                 </div>
 
                 {/* Price Counter */}
-                <div className="absolute top-8 right-8 z-10 flex flex-col items-end">
-                    <div className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">
+                <div className="absolute top-4 right-4 lg:top-8 lg:right-8 z-10 flex flex-col items-end pointer-events-none lg:pointer-events-auto">
+                    <div className="text-[10px] lg:text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">
                         Estimated Cost
                     </div>
-                    <div className="text-4xl font-bold text-cyber-cyan tabular-nums">
+                    <div className="text-2xl lg:text-4xl font-bold text-cyber-cyan tabular-nums">
                         <AnimatedNumber value={quote.oneTimeCost} />
                     </div>
                     {quote.monthlyCost > 0 && (
-                        <div className="text-sm text-gray-400 font-mono mt-1">
+                        <div className="text-xs lg:text-sm text-gray-400 font-mono mt-1">
                             + ₹{quote.monthlyCost.toLocaleString()}/mo
                         </div>
                     )}
                 </div>
 
                 {/* 3D Stage */}
-                <div className="relative z-0 w-full max-w-2xl aspect-square flex items-center justify-center">
+                <div className="relative z-0 w-full max-w-sm lg:max-w-2xl aspect-square flex items-center justify-center mt-12 lg:mt-0">
                     <ThreeDBox />
                 </div>
 
-                {/* Footer Info */}
-                <div className="absolute bottom-8 text-center flex flex-col items-center gap-4 z-20">
-                    <div className="text-xs text-gray-600 font-mono">
+                {/* Footer Info / Launch Button */}
+                <div className="absolute bottom-8 text-center flex flex-col items-center gap-4 z-20 w-full px-4">
+                    <div className="text-xs text-gray-600 font-mono hidden lg:block">
                         {isReady ? "SYSTEM READY FOR LAUNCH." : "DRAG MODULES TO INITIALIZE."}
                     </div>
 
@@ -67,16 +67,16 @@ export default function ConfiguratorPage() {
                                 // Add a small delay for the tap animation before navigating
                                 setTimeout(() => router.push('/checkout'), 200);
                             }}
-                            className="px-8 py-3 bg-cyber-cyan text-obsidian font-bold text-lg uppercase tracking-widest rounded-sm shadow-[0_0_20px_rgba(102,252,241,0.5)] hover:bg-white transition-colors cursor-pointer"
+                            className="w-full lg:w-auto px-8 py-3 bg-cyber-cyan text-obsidian font-bold text-lg uppercase tracking-widest rounded-sm shadow-[0_0_20px_rgba(102,252,241,0.5)] hover:bg-white transition-colors cursor-pointer"
                         >
-                            Initialize Launch Sequence
+                            Initialize Launch
                         </motion.button>
                     )}
                 </div>
             </div>
 
-            {/* Right Supply Dock - 40% */}
-            <div className="w-[40%] h-full relative z-20 shadow-2xl">
+            {/* Right Supply Dock - 40% on Desktop, Full stack on Mobile */}
+            <div className="w-full lg:w-[40%] h-auto lg:h-full relative z-20 shadow-2xl bg-slate-900/95 lg:border-l border-t lg:border-t-0 border-glass-border">
                 <SupplyDock />
             </div>
         </div>
