@@ -1,7 +1,7 @@
 'use client';
 
 import { useBuilderStore } from '@/store/builderStore';
-import { PRICING_DATA } from '@/utils/PricingLogic';
+import { PRICING_DATA } from '@/utils/PricingData';
 import { motion } from 'framer-motion';
 import { CheckCircle, Clock, Database, Zap, Headphones } from 'lucide-react';
 import { useRouter } from 'next/navigation';

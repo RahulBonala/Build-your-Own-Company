@@ -1,11 +1,12 @@
 'use client';
 
 import { useBuilderStore } from '@/store/builderStore';
-import { PRICING_DATA } from '@/utils/PricingLogic';
+import { PRICING_DATA } from '@/utils/PricingData';
 import clsx from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Check } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+import { SidebarOption } from './SidebarOption';
 
 type Category = keyof typeof PRICING_DATA;
 
@@ -15,21 +16,31 @@ export const SupplyDock = () => {
 
     const categories: Category[] = ['design', 'database', 'testing', 'marketing'];
 
+    const getCategoryColor = (cat: Category) => {
+        switch (cat) {
+            case 'design': return 'bg-cyan-500';
+            case 'database': return 'bg-emerald-500';
+            case 'testing': return 'bg-amber-400';
+            case 'marketing': return 'bg-fuchsia-500';
+            default: return 'bg-gray-500';
+        }
+    };
+
     return (
-        <div className="w-full h-full bg-obsidian/90 border-l border-glass-border flex flex-col p-6 overflow-y-auto">
+        <div className="w-full h-full bg-slate-900/95 border-l border-glass-border flex flex-col p-6 overflow-y-auto">
             <h2 className="text-xl font-bold font-mono text-white mb-6 tracking-widest uppercase border-b border-glass-border pb-4">
                 Supply Dock
             </h2>
 
             <div className="flex flex-col gap-4">
                 {categories.map((category) => (
-                    <div key={category} className="border border-glass-border rounded-lg overflow-hidden bg-black/20">
+                    <div key={category} className="border border-glass-border rounded-lg overflow-visible bg-black/20">
                         <button
                             onClick={() => setExpanded(expanded === category ? null : category)}
                             className="w-full flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 transition-colors"
                         >
                             <div className="flex items-center gap-2">
-                                <span className={clsx("w-2 h-2 rounded-full", selections[category] ? "bg-cyber-cyan" : "bg-gray-600")} />
+                                <span className={clsx("w-2 h-2 rounded-full shadow-[0_0_8px_currentColor]", getCategoryColor(category))} />
                                 <span className="font-bold text-silver uppercase">{category}</span>
                             </div>
                             <ChevronDown
@@ -41,39 +52,20 @@ export const SupplyDock = () => {
                         <AnimatePresence>
                             {expanded === category && (
                                 <motion.div
-                                    initial={{ height: 0 }}
-                                    animate={{ height: 'auto' }}
-                                    exit={{ height: 0 }}
-                                    className="overflow-hidden"
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    className="overflow-visible"
                                 >
                                     <div className="p-2 space-y-2">
-                                        {Object.entries(PRICING_DATA[category]).map(([key, data]: [string, any]) => (
-                                            <button
+                                        {Object.entries(PRICING_DATA[category]).map(([key, data]) => (
+                                            <SidebarOption
                                                 key={key}
-                                                onClick={() => setSelection(category, key)}
-                                                className={clsx(
-                                                    "w-full text-left p-3 rounded-md transition-all flex items-center justify-between group relative overflow-hidden",
-                                                    selections[category] === key
-                                                        ? "bg-cyber-cyan/10 border border-cyber-cyan/50 text-cyber-cyan"
-                                                        : "bg-white/5 hover:bg-white/10 border border-transparent text-gray-400 hover:text-white"
-                                                )}
-                                            >
-                                                <div className="relative z-10">
-                                                    <div className="text-sm font-bold">{data.label}</div>
-                                                    <div className="text-xs opacity-70 mt-1 font-mono">
-                                                        {data.price ? `₹${data.price.toLocaleString()}` : `Setup: ₹${data.setup.toLocaleString()}`}
-                                                    </div>
-                                                </div>
-
-                                                {selections[category] === key && (
-                                                    <Check size={16} className="relative z-10" />
-                                                )}
-
-                                                {/* Selection Glow */}
-                                                {selections[category] === key && (
-                                                    <div className="absolute inset-0 bg-cyber-cyan/5 blur-md" />
-                                                )}
-                                            </button>
+                                                optionKey={key}
+                                                data={data}
+                                                isSelected={selections[category] === key}
+                                                onSelect={() => setSelection(category, key)}
+                                            />
                                         ))}
                                     </div>
                                 </motion.div>

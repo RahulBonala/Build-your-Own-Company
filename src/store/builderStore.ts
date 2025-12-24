@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { calculateQuote, PRICING_DATA } from '@/utils/PricingLogic';
+import { calculateQuote, PRICING_DATA } from '@/utils/PricingData';
 
 interface BuilderState {
     idea: string;

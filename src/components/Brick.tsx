@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { PRICING_DATA } from '@/utils/PricingLogic';
+import { PRICING_DATA } from '@/utils/PricingData';
 import clsx from 'clsx';
 
 interface BrickProps {
@@ -19,18 +19,18 @@ export const Brick = ({ category, type, index }: BrickProps) => {
     return (
         <motion.div
             layoutId={`brick-${category}`}
-            initial={{ opacity: 0, y: -100, scale: 0.8 }}
+            initial={{ opacity: 0, y: -200, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{
                 type: "spring",
-                stiffness: 120,
+                stiffness: 300,
                 damping: 15,
                 mass: 1
             }}
             className={clsx(
-                "relative w-full h-16 mb-1 rounded-sm border border-white/20 shadow-lg flex items-center justify-center backdrop-blur-md",
-                info.color // Tailwind class from logic
+                "relative w-full h-16 mb-1 rounded-sm shadow-lg flex items-center justify-center backdrop-blur-md bg-gradient-to-r border border-white/20",
+                info.color // Tailwind class now contains gradient e.g., "from-cyan-500 to-blue-500"
             )}
             style={{
                 zIndex: index, // Ensure stacking order visual
