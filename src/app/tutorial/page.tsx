@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, PlayCircle, Hammer, Headphones } from 'lucide-react';
 import { useBuilderStore } from '@/store/builderStore';
+import { PRICING_DATA } from '@/utils/PricingData';
 
 export default function TutorialPage() {
     const router = useRouter();
@@ -80,11 +81,33 @@ export default function TutorialPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            className="text-xl text-gray-300 leading-relaxed max-w-lg"
+                            className="max-w-4xl w-full"
                         >
-                            On the next screen, you will choose components for your company.
-                            <br />
-                            <span className="text-cyber-cyan font-bold">Stack bricks to build your quote.</span>
+                            <div className="text-xl text-gray-300 mb-8 max-w-lg mx-auto">
+                                You will build your company by selecting components from the <span className="text-cyber-cyan font-bold">Supply Dock</span>.
+                            </div>
+
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                                {Object.entries(PRICING_DATA).map(([category, options]) => (
+                                    <div key={category} className="bg-white/5 border border-glass-border p-3 rounded text-left">
+                                        <div className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-2 border-b border-white/10 pb-1">
+                                            {category}
+                                        </div>
+                                        <div className="space-y-1">
+                                            {Object.values(options).slice(0, 2).map((opt: any) => (
+                                                <div key={opt.id} className="text-xs text-gray-300 truncate">
+                                                    • {opt.label}
+                                                </div>
+                                            ))}
+                                            <div className="text-xs text-gray-600 italic">...and more</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="text-sm text-gray-400">
+                                Hover over options for <span className="text-white border-b border-dashed border-gray-500">Info-Spection</span> details.
+                            </div>
                         </motion.div>
                     )}
 
