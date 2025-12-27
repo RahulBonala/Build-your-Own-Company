@@ -1,0 +1,5 @@
+{
+    "css.lint.unknownAtRules": "ignore",
+    "files.associations": {},
+    "scss.lint.unknownAtRules": "ignore"
+}

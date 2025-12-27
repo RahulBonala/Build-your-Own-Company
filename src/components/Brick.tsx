@@ -11,7 +11,7 @@ interface BrickProps {
 }
 
 export const Brick = ({ category, type, index }: BrickProps) => {
-    // @ts-ignore - Validating existence before access but TS might complain about dynamic key access
+    // Safe lookup with type narrowing if needed, though category/type inputs should match keys.
     const info = PRICING_DATA[category]?.[type];
 
     if (!info) return null;

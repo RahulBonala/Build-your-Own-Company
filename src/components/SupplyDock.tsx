@@ -37,6 +37,7 @@ export const SupplyDock = () => {
                     <div key={category} className="border border-glass-border rounded-lg overflow-visible bg-black/20">
                         <button
                             onClick={() => setExpanded(expanded === category ? null : category)}
+                            aria-label={`Toggle ${category} section`}
                             className="w-full flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 transition-colors"
                         >
                             <div className="flex items-center gap-2">

@@ -12,13 +12,13 @@ export default function LandingPage() {
   const [inputValue, setInputValue] = useState('');
   const [isWarping, setIsWarping] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const spotlightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      const spotlight = document.getElementById('spotlight');
-      if (spotlight) {
-        spotlight.style.left = `${e.clientX}px`;
-        spotlight.style.top = `${e.clientY}px`;
+      if (spotlightRef.current) {
+        spotlightRef.current.style.left = `${e.clientX}px`;
+        spotlightRef.current.style.top = `${e.clientY}px`;
       }
     };
 
@@ -46,7 +46,7 @@ export default function LandingPage() {
 
       {/* Spotlight */}
       <div
-        id="spotlight"
+        ref={spotlightRef}
         className="fixed w-[600px] h-[600px] bg-cyber-cyan/10 rounded-full blur-[100px] pointer-events-none -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300"
         style={{ opacity: isWarping ? 0 : 1 }}
       />

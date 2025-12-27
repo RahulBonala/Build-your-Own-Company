@@ -33,8 +33,17 @@ export default function TutorialPage() {
         alert("Establishing secure uplink to Builder Support Agent... (Stub)");
     };
 
+    const handleFastForward = () => {
+        if (step < 3) {
+            setStep(prev => prev + 1);
+        }
+    };
+
     return (
-        <div className="w-full h-screen bg-obsidian flex flex-col items-center justify-center p-8 text-center text-silver relative overflow-hidden">
+        <div
+            onClick={handleFastForward}
+            className="w-full h-screen bg-obsidian flex flex-col items-center justify-center p-8 text-center text-silver relative overflow-hidden cursor-pointer"
+        >
             {/* Ambient Background */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-obsidian to-obsidian pointer-events-none" />
 
@@ -42,12 +51,12 @@ export default function TutorialPage() {
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                className="mb-8 relative z-10"
+                className="mb-8 relative z-10 pointer-events-none"
             >
                 <Bot size={64} className="text-cyber-cyan animate-pulse" />
             </motion.div>
 
-            <div className="max-w-2xl h-48 flex flex-col items-center relative z-10">
+            <div className="max-w-2xl h-48 flex flex-col items-center relative z-10 pointer-events-none">
                 <AnimatePresence mode="wait">
                     {step === 0 && (
                         <motion.div

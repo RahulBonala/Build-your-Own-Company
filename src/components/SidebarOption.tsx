@@ -28,6 +28,7 @@ export const SidebarOption = ({ optionKey, data, isSelected, onSelect }: Sidebar
         <div className="relative group">
             <button
                 onClick={onSelect}
+                aria-label={`Select ${data.label}`}
                 className={clsx(
                     "w-full text-left p-3 rounded-md transition-all flex items-center justify-between relative overflow-hidden",
                     isSelected
@@ -56,6 +57,8 @@ export const SidebarOption = ({ optionKey, data, isSelected, onSelect }: Sidebar
 
             {/* Info Icon Button - Positioned absolute to not interfere with main click but accessible */}
             <div
+                role="button"
+                aria-label="More info"
                 className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-2 text-gray-500 hover:text-cyan-400 cursor-help transition-colors"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={() => setShowInfo(false)}
