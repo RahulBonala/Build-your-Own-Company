@@ -7,9 +7,9 @@ import { Check, Lock } from 'lucide-react';
 
 const stages = [
     { id: 1, name: 'Strategy', status: 'completed' },
-    { id: 2, name: 'Coding', status: 'completed' },
-    { id: 3, name: 'Database', status: 'completed' },
-    { id: 4, name: 'Testing', status: 'active', subStatus: 'Regression Testing' },
+    { id: 2, name: 'Web Design', status: 'active', subStatus: 'Figma Prototyping' },
+    { id: 3, name: 'Coding', status: 'pending' },
+    { id: 4, name: 'Testing', status: 'pending' },
     { id: 5, name: 'Marketing', status: 'pending' },
     { id: 6, name: 'Pre-Launch', status: 'gate' },
     { id: 7, name: 'Launch', status: 'locked' },

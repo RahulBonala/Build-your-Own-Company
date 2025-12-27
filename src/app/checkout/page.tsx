@@ -11,6 +11,8 @@ export default function CheckoutPage() {
     const router = useRouter();
     const { selections, quote } = useBuilderStore();
     const [hydrated, setHydrated] = useState(false);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     useEffect(() => {
         setHydrated(true);
@@ -23,8 +25,17 @@ export default function CheckoutPage() {
         alert("Connecting to Senior Solutions Architect... (Stub)");
     };
 
+    const handlePayment = () => {
+        setIsProcessing(true);
+        setTimeout(() => {
+            setIsProcessing(false);
+            setShowPaymentModal(false);
+            router.push('/dashboard');
+        }, 2000);
+    };
+
     return (
-        <div className="min-h-screen bg-obsidian text-silver p-8 flex flex-col items-center">
+        <div className="min-h-screen bg-obsidian text-silver p-8 flex flex-col items-center relative">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -118,7 +129,10 @@ export default function CheckoutPage() {
                                     </div>
                                 </div>
 
-                                <button className="w-full py-5 bg-cyber-cyan text-obsidian font-black text-xl uppercase tracking-widest rounded hover:bg-white transition-colors shadow-[0_0_30px_rgba(102,252,241,0.3)] hover:scale-[1.02] transform duration-200">
+                                <button
+                                    onClick={() => setShowPaymentModal(true)}
+                                    className="w-full py-5 bg-cyber-cyan text-obsidian font-black text-xl uppercase tracking-widest rounded hover:bg-white transition-colors shadow-[0_0_30px_rgba(102,252,241,0.3)] hover:scale-[1.02] transform duration-200"
+                                >
                                     Pay 50% Deposit
                                 </button>
 
@@ -135,6 +149,53 @@ export default function CheckoutPage() {
                     </div>
                 </div>
             </motion.div>
+
+            {/* Mock Payment Modal */}
+            {showPaymentModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+                    <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="bg-slate-900 border border-white/10 p-8 rounded-2xl shadow-2xl max-w-md w-full relative overflow-hidden"
+                    >
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-500" />
+
+                        <h3 className="text-2xl font-bold text-white mb-2">Secure Payment</h3>
+                        <p className="text-slate-400 text-sm mb-6">Completing transaction via Secure Gateway...</p>
+
+                        <div className="bg-slate-950 p-4 rounded-lg mb-6 border border-white/5">
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-slate-500 text-xs uppercase">Amount</span>
+                                <span className="text-white font-mono text-lg">₹{(quote.oneTimeCost * 0.5).toLocaleString()}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-slate-500 text-xs uppercase">Merchant</span>
+                                <span className="text-cyber-cyan font-bold">BuilderBox Inc.</span>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-4">
+                            <button
+                                onClick={() => setShowPaymentModal(false)}
+                                className="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded font-bold transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handlePayment}
+                                disabled={isProcessing}
+                                className="flex-1 py-3 bg-cyber-cyan hover:bg-cyan-300 text-black rounded font-bold transition-colors flex items-center justify-center gap-2"
+                            >
+                                {isProcessing ? (
+                                    <>Processing...</>
+                                ) : (
+                                    <>Confirm Payment</>
+                                )}
+                            </button>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
         </div>
     );
 }

@@ -1,6 +1,8 @@
 'use client';
 
-import React from 'react';
+import { useBuilderStore } from '@/store/builderStore';
+import { PRICING_DATA } from '@/utils/PricingData';
+import { useEffect, useState } from 'react';
 import { Calendar, MessageSquare, CheckCircle2, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -12,6 +14,21 @@ const updates = [
 ];
 
 export default function CommunicationHub() {
+    const { selections } = useBuilderStore();
+    const [timelineStr, setTimelineStr] = useState('Calculating...');
+
+    useEffect(() => {
+        // Logic: Option A (Minimal) -> 1-2 Months
+        // Option B (Mid) -> 2-3 Months
+        // Option C (High/Luxury) -> 3-6 Months
+        const design = selections.design || 'minimal';
+
+        if (design === 'minimal') setTimelineStr('1-2 Months');
+        else if (design === 'mid') setTimelineStr('2-3 Months');
+        else if (design === 'high') setTimelineStr('3-6 Months');
+        else setTimelineStr('1-2 Months');
+    }, [selections]);
+
     return (
         <div className="w-full h-full p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex flex-col">
             <div className="flex justify-between items-center mb-4">
@@ -29,12 +46,12 @@ export default function CommunicationHub() {
                             <Calendar size={24} />
                         </div>
                         <div>
-                            <div className="text-xs text-slate-400 uppercase tracking-wider">Next Sync</div>
-                            <div className="text-lg font-bold text-white">Monday, 10:00 AM</div>
+                            <div className="text-xs text-slate-400 uppercase tracking-wider">Est. Completion</div>
+                            <div className="text-lg font-bold text-white">{timelineStr}</div>
                         </div>
                     </div>
                     <button className="px-3 py-1 bg-white/10 hover:bg-white/20 text-xs text-white uppercase font-bold rounded transition-colors">
-                        Join
+                        Sync
                     </button>
                 </div>
 
