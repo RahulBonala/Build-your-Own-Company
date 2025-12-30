@@ -5,13 +5,19 @@ import { ThreeDBox } from '@/components/ThreeDBox';
 import { useBuilderStore } from '@/store/builderStore';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 export default function ConfiguratorPage() {
     const router = useRouter();
     const { quote, idea, selections } = useBuilderStore();
+    const [isNavigating, setIsNavigating] = useState(false);
 
     // Check if all 4 categories have a selection
     const isReady = Object.values(selections).every(Boolean);
+
+    useEffect(() => {
+        router.prefetch('/checkout');
+    }, [router]);
 
     return (
         <div className="w-full h-screen bg-obsidian flex flex-col lg:flex-row overflow-hidden lg:overflow-hidden overflow-y-auto">
@@ -63,13 +69,17 @@ export default function ConfiguratorPage() {
                             animate={{ scale: 1, opacity: 1 }}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
+                            disabled={isNavigating}
                             onClick={() => {
-                                // Add a small delay for the tap animation before navigating
-                                setTimeout(() => router.push('/checkout'), 200);
+                                setIsNavigating(true);
+                                setTimeout(() => router.push('/checkout'), 500);
                             }}
-                            className="w-full lg:w-auto px-8 py-3 bg-cyber-cyan text-obsidian font-bold text-lg uppercase tracking-widest rounded-sm shadow-[0_0_20px_rgba(102,252,241,0.5)] hover:bg-white transition-colors cursor-pointer"
+                            className={`w-full lg:w-auto px-8 py-3 font-bold text-lg uppercase tracking-widest rounded-sm transition-all cursor-pointer ${isNavigating
+                                    ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                                    : "bg-cyber-cyan text-obsidian shadow-[0_0_20px_rgba(102,252,241,0.5)] hover:bg-white"
+                                }`}
                         >
-                            Initialize Launch
+                            {isNavigating ? "Initializing..." : "Initialize Launch"}
                         </motion.button>
                     )}
                 </div>

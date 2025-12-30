@@ -65,7 +65,7 @@ export default function CheckoutPage() {
                             <div className="space-y-4">
                                 {Object.entries(selections).map(([key, value]) => {
                                     if (!value) return null;
-                                    // @ts-ignore
+                                    // @ts-expect-error - Pricing data keys are dynamic
                                     const item = PRICING_DATA[key]?.[value];
                                     if (!item) return null;
 

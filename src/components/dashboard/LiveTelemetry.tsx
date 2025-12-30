@@ -6,8 +6,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Activity, AlertTriangle, Zap, Server } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+interface DataPoint {
+    time: string;
+    users: number;
+    load: number;
+}
+
 // Mock data generator
-const generateData = (prevData: any[], count: number) => {
+const generateData = (prevData: DataPoint[], count: number) => {
     const lastPoint = prevData[prevData.length - 1] || { time: 0, users: 420, load: 88 };
     // Simulate rapid growth if count > 10 to trigger upsell
     const userGrowth = Math.random() > 0.3 ? Math.floor(Math.random() * 5) + 1 : -1;

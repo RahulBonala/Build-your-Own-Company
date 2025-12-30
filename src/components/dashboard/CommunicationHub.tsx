@@ -15,19 +15,13 @@ const updates = [
 
 export default function CommunicationHub() {
     const { selections } = useBuilderStore();
-    const [timelineStr, setTimelineStr] = useState('Calculating...');
-
-    useEffect(() => {
-        // Logic: Option A (Minimal) -> 1-2 Months
-        // Option B (Mid) -> 2-3 Months
-        // Option C (High/Luxury) -> 3-6 Months
-        const design = selections.design || 'minimal';
-
-        if (design === 'minimal') setTimelineStr('1-2 Months');
-        else if (design === 'mid') setTimelineStr('2-3 Months');
-        else if (design === 'high') setTimelineStr('3-6 Months');
-        else setTimelineStr('1-2 Months');
-    }, [selections]);
+    // Logic: Option A (Minimal) -> 1-2 Months
+    // Option B (Mid) -> 2-3 Months
+    // Option C (High/Luxury) -> 3-6 Months
+    const design = selections.design || 'minimal';
+    let timelineStr = '1-2 Months';
+    if (design === 'mid') timelineStr = '2-3 Months';
+    else if (design === 'high') timelineStr = '3-6 Months';
 
     return (
         <div className="w-full h-full p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex flex-col">

@@ -15,15 +15,23 @@ export default function LandingPage() {
   const spotlightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let animationFrameId: number;
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (spotlightRef.current) {
-        spotlightRef.current.style.left = `${e.clientX}px`;
-        spotlightRef.current.style.top = `${e.clientY}px`;
-      }
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(() => {
+        if (spotlightRef.current) {
+          spotlightRef.current.style.left = `${e.clientX}px`;
+          spotlightRef.current.style.top = `${e.clientY}px`;
+        }
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {

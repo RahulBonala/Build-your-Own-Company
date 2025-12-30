@@ -103,7 +103,7 @@ export default function TutorialPage() {
                             key="step3"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="flex flex-col items-center gap-6"
+                            className="flex flex-col items-center gap-6 pointer-events-auto"
                         >
                             <div className="text-3xl font-black text-white uppercase tracking-widest">
                                 System Ready

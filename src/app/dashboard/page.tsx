@@ -40,7 +40,7 @@ export default function DashboardPage() {
             <header className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end relative z-10 gap-4">
                 <div>
                     <h1 className="text-3xl md:text-4xl font-black font-heading uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
-                        Founder's Cockpit
+                        Founder&apos;s Cockpit
                     </h1>
                     <p className="text-slate-500 font-mono text-sm mt-1">Project: BuilderBox // ID: BB-2025-X1</p>
                 </div>
