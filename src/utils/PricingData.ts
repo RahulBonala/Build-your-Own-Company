@@ -2,12 +2,12 @@ export type OptionType = {
     id: string;
     label: string;
     description: string;
-    details: string[];    // Bullet points for the info card
-    price: number;        // One-time cost
-    monthly?: number;     // Monthly cost (optional)
-    setup?: number;       // Setup cost (if different from price, used for database)
-    time?: number;        // Timeline impact in weeks
-    color: string;        // Tailwind color class for the brick (or gradient)
+    details: string[];
+    price: number;
+    monthly?: number;
+    setup?: number;
+    time?: number;
+    color: string;
 };
 
 export type PricingDataType = {
@@ -76,7 +76,7 @@ export const PRICING_DATA: PricingDataType = {
                 "Daily Auto-Backups",
                 "Shared Infrastructure"
             ],
-            price: 0, // Using setup/monthly logic
+            price: 0,
             setup: 20000,
             monthly: 2000,
             color: "from-emerald-400 to-green-600"
@@ -150,15 +150,7 @@ export const PRICING_DATA: PricingDataType = {
                 "Chaos Engineering (Server Failure Drills)"
             ],
             price: 150000,
-            color: "from-red-600 to-orange-700" // This was red, keeping vaguely warning-like but prompt says amber/yellow for testing? 
-            // Prompt says: "Testing Brick: Amber/Yellow Gradient (from-amber-300 to-orange-500)"
-            // Wait, existing PRICING_DATA had distinct colors per item? No, prompt says "Brick Specific Colors (Gradient Styles)... Testing Brick: Amber/Yellow"
-            // So ALL testing items share that gradient or is it per item?
-            // "Brick Specific Colors ... 3. Testing Brick: Amber/Yellow".
-            // I will apply the same gradient to all items in the category, as the prompt implies "Brick Specific Colors" refers to the category brick that falls.
-            // Oh, but the code had different colors per item in previous version.
-            // Prompt: "Brick Specific Colors (Gradient Styles): ... 3. Testing Brick: Amber/Yellow Gradient"
-            // I'll stick to the prompt's category-wide colors.
+            color: "from-amber-300 to-orange-500"
         }
     },
     marketing: {
@@ -204,38 +196,28 @@ export const PRICING_DATA: PricingDataType = {
     }
 };
 
-// Override colors for Testing based on prompt instruction consistency
-PRICING_DATA.testing.extreme.color = "from-amber-300 to-orange-500";
-PRICING_DATA.testing.standard.color = "from-amber-300 to-orange-500";
-PRICING_DATA.testing.basic.color = "from-amber-300 to-orange-500";
-
-
 export const calculateQuote = (selections: { design: string | null; database: string | null; testing: string | null; marketing: string | null; }) => {
     let oneTimeCost = 0;
     let monthlyCost = 0;
     let timelineWeeks = 0;
 
-    // Design
     if (selections.design && PRICING_DATA.design[selections.design]) {
         const item = PRICING_DATA.design[selections.design];
         oneTimeCost += item.price;
         if (item.time) timelineWeeks += item.time;
     }
 
-    // Database
     if (selections.database && PRICING_DATA.database[selections.database]) {
         const item = PRICING_DATA.database[selections.database];
         if (item.setup) oneTimeCost += item.setup;
         if (item.monthly) monthlyCost += item.monthly;
     }
 
-    // Testing
     if (selections.testing && PRICING_DATA.testing[selections.testing]) {
         const item = PRICING_DATA.testing[selections.testing];
         oneTimeCost += item.price;
     }
 
-    // Marketing
     if (selections.marketing && PRICING_DATA.marketing[selections.marketing]) {
         const item = PRICING_DATA.marketing[selections.marketing];
         oneTimeCost += item.price;

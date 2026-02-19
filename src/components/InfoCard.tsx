@@ -6,9 +6,10 @@ interface InfoCardProps {
     title: string;
     description: string;
     details: string[];
+    position?: { top: number };
 }
 
-export const InfoCard = ({ title, description, details, position }: InfoCardProps & { position?: { top: number } }) => {
+export const InfoCard = ({ title, description, details, position }: InfoCardProps) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -16,16 +17,16 @@ export const InfoCard = ({ title, description, details, position }: InfoCardProp
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
             style={{
-                top: position?.top // Only applies on desktop where we use top
+                top: position?.top
             }}
             className={clsx(
-                // Mobile: Fixed at bottom, full width, rounded top only
+                // Mobile: Fixed at bottom, full width
                 "fixed bottom-0 left-0 w-full p-6 rounded-t-xl bg-slate-900/95 border-t border-glass-border backdrop-blur-xl shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-[100]",
-                // Desktop (lg): Fixed to the left of the sidebar, vertically aligned, rounded full
-                "lg:bottom-auto lg:right-[40%] lg:mr-4 lg:w-72 lg:rounded-xl lg:border lg:shadow-2xl lg:-translate-y-1/2"
+                // Desktop: Positioned to the left of the sidebar
+                "lg:bottom-auto lg:right-[40%] lg:mr-4 lg:w-72 lg:rounded-xl lg:border lg:shadow-2xl lg:-translate-y-1/2 lg:left-auto"
             )}
         >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent mobile:rounded-t-xl lg:rounded-xl pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-t-xl lg:rounded-xl pointer-events-none" />
 
             <div className="relative z-10 flex flex-col gap-2">
                 <div>

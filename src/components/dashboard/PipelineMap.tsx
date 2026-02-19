@@ -17,12 +17,12 @@ const stages = [
 
 export default function PipelineMap() {
     return (
-        <div className="w-full p-6 pb-2 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 relative overflow-hidden min-h-[220px]">
+        <div className="w-full p-4 md:p-6 pb-2 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 relative overflow-hidden min-h-[180px] md:min-h-[220px]">
             <div className="absolute top-0 right-0 p-4 opacity-20 pointer-events-none">
-                <h2 className="text-4xl font-black font-heading text-white/10 uppercase tracking-widest">Pipeline</h2>
+                <h2 className="text-2xl md:text-4xl font-black font-heading text-white/10 uppercase tracking-widest">Pipeline</h2>
             </div>
 
-            <div className="flex justify-between items-start relative z-10 mt-12 px-8">
+            <div className="flex justify-between items-start relative z-10 mt-8 md:mt-12 px-2 md:px-8 overflow-x-auto">
                 {/* Connection Line Background */}
                 <div className="absolute top-6 left-0 w-full h-1 bg-white/5 -z-10" />
 
@@ -32,24 +32,24 @@ export default function PipelineMap() {
                     const isGate = stage.status === 'gate';
 
                     return (
-                        <div key={stage.id} className="flex flex-col items-center gap-4 relative group w-24">
+                        <div key={stage.id} className="flex flex-col items-center gap-2 md:gap-4 relative group min-w-[60px] md:w-24 flex-shrink-0">
                             {/* Node Circle */}
                             <motion.div
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 transition={{ delay: index * 0.1 }}
                                 className={cn(
-                                    "w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-500 z-10 relative bg-slate-950",
+                                    "w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center border-2 transition-all duration-500 z-10 relative bg-slate-950",
                                     isCompleted ? "border-emerald-500 text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.3)]" :
                                         isActive ? "border-cyan-400 text-cyan-300 shadow-[0_0_20px_rgba(34,211,238,0.5)] scale-110" :
                                             isGate ? "border-amber-500 text-amber-400" :
                                                 "border-slate-700 text-slate-500"
                                 )}
                             >
-                                {isCompleted ? <Check size={20} /> :
-                                    isGate ? <Lock size={18} /> :
-                                        isActive ? <div className="w-3 h-3 bg-cyan-400 rounded-full animate-pulse" /> :
-                                            <div className="w-2 h-2 bg-slate-600 rounded-full" />}
+                                {isCompleted ? <Check size={16} className="md:w-5 md:h-5" /> :
+                                    isGate ? <Lock size={14} className="md:w-[18px] md:h-[18px]" /> :
+                                        isActive ? <div className="w-2 h-2 md:w-3 md:h-3 bg-cyan-400 rounded-full animate-pulse" /> :
+                                            <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-slate-600 rounded-full" />}
 
                                 {/* Active Ring Animation */}
                                 {isActive && (
@@ -62,15 +62,15 @@ export default function PipelineMap() {
                             </motion.div>
 
                             {/* Label */}
-                            <div className="text-center w-32 flex flex-col items-center">
+                            <div className="text-center w-16 md:w-32 flex flex-col items-center">
                                 <p className={cn(
-                                    "text-xs font-bold uppercase tracking-wider mb-1",
+                                    "text-[9px] md:text-xs font-bold uppercase tracking-wider mb-1",
                                     isActive ? "text-cyan-400" : isCompleted ? "text-emerald-400" : "text-slate-500"
                                 )}>
                                     {stage.name}
                                 </p>
                                 {stage.subStatus && (
-                                    <p className="text-[10px] text-slate-400 font-mono bg-slate-900/80 px-2 py-0.5 rounded border border-white/5 inline-block whitespace-nowrap">
+                                    <p className="text-[8px] md:text-[10px] text-slate-400 font-mono bg-slate-900/80 px-1 md:px-2 py-0.5 rounded border border-white/5 inline-block whitespace-nowrap hidden md:block">
                                         {stage.subStatus}
                                     </p>
                                 )}
@@ -78,7 +78,7 @@ export default function PipelineMap() {
                                     <motion.button
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="mt-1 px-3 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 text-[10px] font-bold tracking-widest uppercase rounded shadow-[0_0_10px_rgba(245,158,11,0.2)]"
+                                        className="mt-1 px-2 md:px-3 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 text-[8px] md:text-[10px] font-bold tracking-widest uppercase rounded shadow-[0_0_10px_rgba(245,158,11,0.2)] cursor-pointer"
                                     >
                                         Approve
                                     </motion.button>
@@ -87,55 +87,6 @@ export default function PipelineMap() {
                         </div>
                     );
                 })}
-
-                {/* The Loop (Testing -> Coding) - SVG Overlay */}
-                {/* We absolutely position this over the nodes explicitly relevant to the loop */}
-                <div className="absolute top-6 left-0 w-full h-full pointer-events-none -z-10">
-                    <svg className="w-full h-32 overflow-visible">
-                        <defs>
-                            <linearGradient id="loopGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stopColor="rgba(244, 63, 94, 0)" />
-                                <stop offset="50%" stopColor="#f43f5e" />
-                                <stop offset="100%" stopColor="rgba(244, 63, 94, 0)" />
-                            </linearGradient>
-                        </defs>
-                        {/* 
-                  Drawing a path from Stage 4 (Testing) back to Stage 2 (Coding).
-                  Assuming distinct spacing: 
-                  Stage 1: ~4%, Stage 2: ~18%, Stage 3: ~32%, Stage 4: ~46% ... 
-                  This is tricky with flexbox, but 'w-full' px calc approximation is okay for a POC 
-                  OR we use a simpler visual for now. 
-                  Let's try a distinct curved line. 
-                */}
-                        <motion.path
-                            d="M 520 20 Q 350 100 220 20"
-                            fill="none"
-                            stroke="url(#loopGradient)"
-                            strokeWidth="3"
-                            strokeDasharray="8 4"
-                            initial={{ strokeDashoffset: 100, opacity: 0 }}
-                            animate={{ strokeDashoffset: 0, opacity: [0, 1, 0] }}
-                            transition={{
-                                duration: 3,
-                                repeat: Infinity,
-                                repeatDelay: 1
-                            }}
-                        />
-                        <motion.text
-                            x="350"
-                            y="70"
-                            fill="#f43f5e"
-                            fontSize="10"
-                            fontWeight="bold"
-                            textAnchor="middle"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: [0, 1, 0] }}
-                            transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }}
-                        >
-                            BUG DETECTED // RETRYING
-                        </motion.text>
-                    </svg>
-                </div>
             </div>
         </div>
     );

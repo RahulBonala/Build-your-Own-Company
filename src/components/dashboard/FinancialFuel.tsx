@@ -1,12 +1,14 @@
 'use client';
 
 import React from 'react';
+import { useBuilderStore } from '@/store/builderStore';
 import { motion } from 'framer-motion';
-import { CreditCard, Fuel, Zap } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { CreditCard, Fuel } from 'lucide-react';
 
 export default function FinancialFuel() {
-    const totalCost = 115000;
+    const { quote } = useBuilderStore();
+
+    const totalCost = quote.oneTimeCost || 115000;
     const paidCost = totalCost * 0.5;
     const remainingCost = totalCost - paidCost;
     const percentage = 50;
@@ -24,20 +26,18 @@ export default function FinancialFuel() {
                 {/* Gauge using SVG */}
                 <div className="relative w-32 h-32 flex-shrink-0">
                     <svg className="w-full h-full transform -rotate-90">
-                        {/* Background Circle */}
                         <circle
                             cx="64" cy="64" r="58"
                             stroke="rgba(255,255,255,0.1)"
                             strokeWidth="8"
                             fill="none"
                         />
-                        {/* Progress Circle (Green) */}
                         <motion.circle
                             cx="64" cy="64" r="58"
-                            stroke="#10b981" // Emerald-500
+                            stroke="#10b981"
                             strokeWidth="8"
                             fill="none"
-                            strokeDasharray={364} // 2 * PI * 58
+                            strokeDasharray={364}
                             strokeDashoffset={364 - (364 * percentage) / 100}
                             strokeLinecap="round"
                             initial={{ strokeDashoffset: 364 }}
@@ -45,7 +45,6 @@ export default function FinancialFuel() {
                             transition={{ duration: 1.5, ease: "easeOut" }}
                         />
                     </svg>
-                    {/* Center Text */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                         <span className="text-2xl font-black text-white">{percentage}%</span>
                         <span className="text-[10px] text-slate-400 uppercase tracking-wide">Paid</span>
@@ -54,7 +53,6 @@ export default function FinancialFuel() {
 
                 {/* Info & Actions */}
                 <div className="flex-1 space-y-4">
-                    {/* Stats */}
                     <div className="grid grid-cols-2 gap-2">
                         <div className="bg-slate-900/50 p-2 rounded border border-white/5">
                             <div className="text-[10px] text-slate-500 uppercase">Paid</div>
@@ -66,15 +64,13 @@ export default function FinancialFuel() {
                         </div>
                     </div>
 
-                    {/* Warning Text */}
                     <div className="text-[10px] text-amber-400/80 italic flex items-center gap-1">
                         <div className="w-1 h-1 bg-amber-400 rounded-full animate-pulse" />
                         Balance must be cleared before Stage 7.
                     </div>
 
-                    {/* Pay Button */}
                     <button
-                        className="w-full py-2 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold uppercase tracking-widest text-xs rounded shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                        className="w-full py-2 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold uppercase tracking-widest text-xs rounded shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                         onClick={() => alert('Opening Secure Payment Gateway...')}
                     >
                         <CreditCard size={14} />

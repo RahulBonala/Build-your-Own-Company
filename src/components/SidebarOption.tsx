@@ -30,7 +30,7 @@ export const SidebarOption = ({ optionKey, data, isSelected, onSelect }: Sidebar
                 onClick={onSelect}
                 aria-label={`Select ${data.label}`}
                 className={clsx(
-                    "w-full text-left p-3 rounded-md transition-all flex items-center justify-between relative overflow-hidden",
+                    "w-full text-left p-3 rounded-md transition-all flex items-center justify-between relative overflow-hidden cursor-pointer",
                     isSelected
                         ? "bg-cyber-cyan/10 border border-cyber-cyan/50 text-cyber-cyan"
                         : "bg-white/5 hover:bg-white/10 border border-transparent text-gray-400 hover:text-white"

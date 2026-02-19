@@ -33,47 +33,56 @@ export const SupplyDock = () => {
             </h2>
 
             <div className="flex flex-col gap-4">
-                {categories.map((category) => (
-                    <div key={category} className="border border-glass-border rounded-lg overflow-visible bg-black/20">
-                        <button
-                            onClick={() => setExpanded(expanded === category ? null : category)}
-                            aria-label={`Toggle ${category} section`}
-                            className="w-full flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 transition-colors"
-                        >
-                            <div className="flex items-center gap-2">
-                                <span className={clsx("w-2 h-2 rounded-full shadow-[0_0_8px_currentColor]", getCategoryColor(category))} />
-                                <span className="font-bold text-silver uppercase">{category}</span>
-                            </div>
-                            <ChevronDown
-                                className={clsx("text-gray-400 transition-transform", expanded === category && "rotate-180")}
-                                size={16}
-                            />
-                        </button>
+                {categories.map((category) => {
+                    const isSelected = !!selections[category];
+                    return (
+                        <div key={category} className="border border-glass-border rounded-lg overflow-visible bg-black/20">
+                            <button
+                                onClick={() => setExpanded(expanded === category ? null : category)}
+                                aria-label={`Toggle ${category} section`}
+                                className="w-full flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+                            >
+                                <div className="flex items-center gap-2">
+                                    <span className={clsx("w-2 h-2 rounded-full shadow-[0_0_8px_currentColor]", getCategoryColor(category))} />
+                                    <span className="font-bold text-silver uppercase">{category}</span>
+                                    {isSelected && (
+                                        <span className="text-[10px] text-cyber-cyan bg-cyber-cyan/10 px-2 py-0.5 rounded-full font-mono">
+                                            ✓
+                                        </span>
+                                    )}
+                                </div>
+                                <ChevronDown
+                                    className={clsx("text-gray-400 transition-transform duration-200", expanded === category && "rotate-180")}
+                                    size={16}
+                                />
+                            </button>
 
-                        <AnimatePresence>
-                            {expanded === category && (
-                                <motion.div
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: 'auto', opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    className="overflow-visible"
-                                >
-                                    <div className="p-2 space-y-2">
-                                        {Object.entries(PRICING_DATA[category]).map(([key, data]) => (
-                                            <SidebarOption
-                                                key={key}
-                                                optionKey={key}
-                                                data={data}
-                                                isSelected={selections[category] === key}
-                                                onSelect={() => setSelection(category, key)}
-                                            />
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
-                ))}
+                            <AnimatePresence initial={false}>
+                                {expanded === category && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="p-2 space-y-2">
+                                            {Object.entries(PRICING_DATA[category]).map(([key, data]) => (
+                                                <SidebarOption
+                                                    key={key}
+                                                    optionKey={key}
+                                                    data={data}
+                                                    isSelected={selections[category] === key}
+                                                    onSelect={() => setSelection(category, key)}
+                                                />
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );
