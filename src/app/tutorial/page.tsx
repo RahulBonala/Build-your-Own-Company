@@ -10,6 +10,7 @@ import PageTransition from '@/components/PageTransition';
 export default function TutorialPage() {
     const router = useRouter();
     const idea = useBuilderStore((state) => state.idea);
+    const resetSelections = useBuilderStore((state) => state.resetSelections);
     const [hydrated, setHydrated] = useState(false);
     const [step, setStep] = useState(0);
 
@@ -144,7 +145,10 @@ export default function TutorialPage() {
                                     </button>
 
                                     <button
-                                        onClick={() => router.push('/configurator')}
+                                        onClick={() => {
+                                            resetSelections();
+                                            router.push('/configurator');
+                                        }}
                                         className="flex items-center gap-2 px-8 py-3 bg-cyber-cyan hover:bg-white text-obsidian font-bold rounded-lg transition-all shadow-[0_0_20px_rgba(102,252,241,0.4)] hover:scale-105 cursor-pointer"
                                     >
                                         <Hammer size={20} /> Ready to Build

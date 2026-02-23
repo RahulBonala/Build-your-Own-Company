@@ -9,6 +9,7 @@ import { ArrowRight } from 'lucide-react';
 export default function LandingPage() {
   const router = useRouter();
   const setIdea = useBuilderStore((state) => state.setIdea);
+  const resetSelections = useBuilderStore((state) => state.resetSelections);
   const [inputValue, setInputValue] = useState('');
   const [isWarping, setIsWarping] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -39,6 +40,7 @@ export default function LandingPage() {
     if (!inputValue.trim()) return;
 
     setIdea(inputValue);
+    resetSelections();
     setIsWarping(true);
 
     // Simulate warp speed delay before navigation

@@ -16,6 +16,7 @@ interface BuilderState {
     };
     setIdea: (idea: string) => void;
     setSelection: (category: 'design' | 'database' | 'testing' | 'marketing', value: string) => void;
+    resetSelections: () => void;
 }
 
 import { persist } from 'zustand/middleware';
@@ -41,6 +42,20 @@ export const useBuilderStore = create<BuilderState>()(
                     const newSelections = { ...state.selections, [category]: value };
                     const newQuote = calculateQuote(newSelections);
                     return { selections: newSelections, quote: newQuote };
+                }),
+            resetSelections: () =>
+                set({
+                    selections: {
+                        design: null,
+                        database: null,
+                        testing: null,
+                        marketing: null,
+                    },
+                    quote: {
+                        oneTimeCost: 0,
+                        monthlyCost: 0,
+                        timelineWeeks: 0,
+                    },
                 }),
         }),
         {
