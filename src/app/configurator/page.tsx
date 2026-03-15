@@ -81,12 +81,26 @@ export default function ConfiguratorPage() {
                         <ThreeDBox />
                     </div>
 
-                    {/* Footer Info / Launch Button */}
-                    <div className="absolute bottom-8 text-center flex flex-col items-center gap-4 z-20 w-full px-4">
+                    {/* Footer Info / Action Buttons */}
+                    <div className="absolute bottom-8 text-center flex flex-col items-center gap-3 z-20 w-full px-4">
                         <div className="text-xs text-gray-600 font-mono hidden lg:block">
                             {isReady ? "SYSTEM READY FOR LAUNCH." : "SELECT ALL 4 MODULES TO INITIALIZE."}
                         </div>
 
+                        {/* Create Demo — always visible once idea is set */}
+                        <motion.button
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            onClick={() => router.push('/demo')}
+                            className="w-full lg:w-auto flex items-center justify-center gap-2 px-8 py-3 bg-purple-500/20 border border-purple-500/50 text-purple-300 font-bold text-sm uppercase tracking-widest rounded-lg hover:bg-purple-500/30 transition-all cursor-pointer shadow-[0_0_16px_rgba(168,85,247,0.15)]"
+                        >
+                            ⚡ Create Demo Website
+                        </motion.button>
+
+                        {/* Initialize Launch — only when all 4 selected */}
                         {isReady && (
                             <motion.button
                                 initial={{ scale: 0.8, opacity: 0 }}
