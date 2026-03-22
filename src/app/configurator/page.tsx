@@ -18,6 +18,7 @@ export default function ConfiguratorPage() {
     const isReady = Object.values(selections).every(Boolean);
 
     useEffect(() => {
+        // eslint-disable-next-line
         setHydrated(true);
     }, []);
 

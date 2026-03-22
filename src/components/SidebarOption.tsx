@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Check, Info } from 'lucide-react';
 import clsx from 'clsx';
 import { InfoCard } from './InfoCard';
@@ -13,7 +13,7 @@ interface SidebarOptionProps {
     onSelect: () => void;
 }
 
-export const SidebarOption = ({ optionKey, data, isSelected, onSelect }: SidebarOptionProps) => {
+export const SidebarOption = ({ data, isSelected, onSelect }: SidebarOptionProps) => {
     const [showInfo, setShowInfo] = useState(false);
     const [cardPos, setCardPos] = useState<{ top: number } | undefined>(undefined);
 

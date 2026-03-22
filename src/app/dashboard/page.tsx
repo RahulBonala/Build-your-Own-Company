@@ -12,10 +12,11 @@ import PageTransition from '@/components/PageTransition';
 
 export default function DashboardPage() {
     const router = useRouter();
-    const { idea, selections, quote } = useBuilderStore();
+    const { idea } = useBuilderStore();
     const [hydrated, setHydrated] = useState(false);
 
     useEffect(() => {
+        // eslint-disable-next-line
         setHydrated(true);
     }, []);
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Activity, AlertTriangle, Zap, Server } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -12,34 +12,26 @@ interface DataPoint {
     load: number;
 }
 
-// Mock data generator
-const generateData = (prevData: DataPoint[], count: number) => {
-    const lastPoint = prevData[prevData.length - 1] || { time: 0, users: 420, load: 88 };
-    // Simulate rapid growth if count > 10 to trigger upsell
-    const userGrowth = Math.random() > 0.3 ? Math.floor(Math.random() * 5) + 1 : -1;
-    const newUsers = Math.max(400, lastPoint.users + userGrowth); // Always > 400 to approach 450
-
-    const loadChange = Math.random() > 0.5 ? 1 : -1;
-    const newLoad = Math.min(99, Math.max(80, lastPoint.load + loadChange));
-
-    // Determine time label (hh:mm:ss) - mocked
+// Realistic data generator — load starts low and grows naturally
+const generateData = (prevData: DataPoint[]) => {
+    const last = prevData[prevData.length - 1] || { time: '10:00', users: 48, load: 22 };
+    const userGrowth = Math.random() > 0.25 ? Math.floor(Math.random() * 4) + 1 : -Math.floor(Math.random() * 2);
+    const newUsers = Math.max(10, Math.min(500, last.users + userGrowth));
+    const targetLoad = Math.round((newUsers / 500) * 100);
+    const noise = Math.round((Math.random() - 0.5) * 8);
+    const newLoad = Math.min(99, Math.max(5, targetLoad + noise));
     const now = new Date();
-    const timeStr = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-
-    return {
-        time: timeStr,
-        users: newUsers,
-        load: newLoad,
-    };
+    const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+    return { time: timeStr, users: newUsers, load: newLoad };
 };
 
 export default function LiveTelemetry() {
     const [data, setData] = useState([
-        { time: '10:00', users: 420, load: 88 },
-        { time: '10:05', users: 425, load: 89 },
-        { time: '10:10', users: 432, load: 87 },
-        { time: '10:15', users: 438, load: 90 },
-        { time: '10:20', users: 442, load: 91 },
+        { time: '10:00', users: 48,  load: 22 },
+        { time: '10:05', users: 63,  load: 28 },
+        { time: '10:10', users: 79,  load: 34 },
+        { time: '10:15', users: 94,  load: 41 },
+        { time: '10:20', users: 112, load: 47 },
     ]);
     const [showUpsell, setShowUpsell] = useState(false);
     const [isUpgrading, setIsUpgrading] = useState(false);
@@ -47,7 +39,7 @@ export default function LiveTelemetry() {
     useEffect(() => {
         const interval = setInterval(() => {
             setData((prev) => {
-                const newDataPoint = generateData(prev, prev.length);
+                const newDataPoint = generateData(prev);
                 const newData = [...prev.slice(1), newDataPoint];
 
                 // Trigger Upsell Logic

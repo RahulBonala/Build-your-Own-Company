@@ -16,6 +16,7 @@ export default function CheckoutPage() {
     const [isProcessing, setIsProcessing] = useState(false);
 
     useEffect(() => {
+        // eslint-disable-next-line
         setHydrated(true);
     }, []);
 

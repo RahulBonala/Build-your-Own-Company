@@ -2,16 +2,41 @@
 
 import React from 'react';
 import { useBuilderStore } from '@/store/builderStore';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { CreditCard, Fuel } from 'lucide-react';
+import { CreditCard, Fuel, TrendingUp } from 'lucide-react';
+import { PRICING_DATA } from '@/utils/PricingData';
 
 export default function FinancialFuel() {
-    const { quote } = useBuilderStore();
+    const { quote, selections } = useBuilderStore();
+    const router = useRouter();
 
-    const totalCost = quote.oneTimeCost || 115000;
+    const totalCost = quote.oneTimeCost || 0;
+    const monthlyCost = quote.monthlyCost || 0;
     const paidCost = totalCost * 0.5;
     const remainingCost = totalCost - paidCost;
-    const percentage = 50;
+    const percentage = totalCost > 0 ? 50 : 0;
+    const circumference = 2 * Math.PI * 58;
+
+    const breakdown: { label: string; amount: number; color: string }[] = [];
+    if (selections.design && PRICING_DATA.design[selections.design]) {
+        const d = PRICING_DATA.design[selections.design];
+        breakdown.push({ label: `Design · ${d.label}`, amount: d.price, color: 'bg-cyan-500' });
+    }
+    if (selections.database && PRICING_DATA.database[selections.database]) {
+        const d = PRICING_DATA.database[selections.database];
+        breakdown.push({ label: `Database · ${d.label}`, amount: d.setup || 0, color: 'bg-emerald-500' });
+    }
+    if (selections.testing && PRICING_DATA.testing[selections.testing]) {
+        const d = PRICING_DATA.testing[selections.testing];
+        breakdown.push({ label: `Testing · ${d.label}`, amount: d.price, color: 'bg-amber-500' });
+    }
+    if (selections.marketing && PRICING_DATA.marketing[selections.marketing]) {
+        const d = PRICING_DATA.marketing[selections.marketing];
+        breakdown.push({ label: `Marketing · ${d.label}`, amount: d.price, color: 'bg-fuchsia-500' });
+    }
+
+    const noSelections = breakdown.length === 0;
 
     return (
         <div className="w-full h-full p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex flex-col relative overflow-hidden">
@@ -20,73 +45,95 @@ export default function FinancialFuel() {
                     <Fuel size={20} className="text-amber-400" />
                     Project Fuel
                 </h3>
+                {monthlyCost > 0 && (
+                    <span className="text-xs font-mono text-amber-400/80 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full flex items-center gap-1">
+                        <TrendingUp size={10} />
+                        +₹{monthlyCost.toLocaleString('en-IN')}/mo
+                    </span>
+                )}
             </div>
 
-            <div className="flex flex-1 items-center gap-8 z-10">
-                {/* Gauge using SVG */}
-                <div className="relative w-32 h-32 flex-shrink-0">
-                    <svg className="w-full h-full transform -rotate-90">
-                        <circle
-                            cx="64" cy="64" r="58"
-                            stroke="rgba(255,255,255,0.1)"
-                            strokeWidth="8"
-                            fill="none"
-                        />
-                        <motion.circle
-                            cx="64" cy="64" r="58"
-                            stroke="#10b981"
-                            strokeWidth="8"
-                            fill="none"
-                            strokeDasharray={364}
-                            strokeDashoffset={364 - (364 * percentage) / 100}
-                            strokeLinecap="round"
-                            initial={{ strokeDashoffset: 364 }}
-                            animate={{ strokeDashoffset: 364 - (364 * percentage) / 100 }}
-                            transition={{ duration: 1.5, ease: "easeOut" }}
-                        />
-                    </svg>
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <span className="text-2xl font-black text-white">{percentage}%</span>
-                        <span className="text-[10px] text-slate-400 uppercase tracking-wide">Paid</span>
+            {noSelections ? (
+                <div className="flex-1 flex flex-col items-center justify-center gap-3 text-center">
+                    <div className="w-16 h-16 rounded-full border-2 border-dashed border-slate-700 flex items-center justify-center">
+                        <Fuel size={22} className="text-slate-600" />
                     </div>
-                </div>
-
-                {/* Info & Actions */}
-                <div className="flex-1 space-y-4">
-                    <div className="grid grid-cols-2 gap-2">
-                        <div className="bg-slate-900/50 p-2 rounded border border-white/5">
-                            <div className="text-[10px] text-slate-500 uppercase">Paid</div>
-                            <div className="text-emerald-400 font-mono font-bold">₹{paidCost.toLocaleString('en-IN')}</div>
-                        </div>
-                        <div className="bg-slate-900/50 p-2 rounded border border-white/5">
-                            <div className="text-[10px] text-slate-500 uppercase">Remaining</div>
-                            <div className="text-white font-mono font-bold">₹{remainingCost.toLocaleString('en-IN')}</div>
-                        </div>
-                    </div>
-
-                    <div className="text-[10px] text-amber-400/80 italic flex items-center gap-1">
-                        <div className="w-1 h-1 bg-amber-400 rounded-full animate-pulse" />
-                        Balance must be cleared before Stage 7.
-                    </div>
-
+                    <p className="text-slate-500 text-sm">No modules selected yet.</p>
                     <button
-                        className="w-full py-2 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold uppercase tracking-widest text-xs rounded shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
-                        onClick={() => alert('Opening Secure Payment Gateway...')}
+                        onClick={() => router.push('/configurator')}
+                        className="text-xs text-cyan-400 hover:text-cyan-300 underline underline-offset-2 cursor-pointer"
                     >
-                        <CreditCard size={14} />
-                        Pay Remaining
+                        Go to configurator →
                     </button>
                 </div>
-            </div>
-
-            <div className="mt-4 flex items-center justify-between z-10">
-                <div className="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity cursor-pointer">
-                    <div className="w-8 h-4 bg-slate-700 rounded-full relative">
-                        <div className="absolute left-1 top-1 w-2 h-2 bg-slate-400 rounded-full" />
+            ) : (
+                <div className="flex flex-1 items-center gap-6 z-10">
+                    <div className="relative w-28 h-28 flex-shrink-0">
+                        <svg className="w-full h-full -rotate-90" viewBox="0 0 128 128">
+                            <circle cx="64" cy="64" r="58" stroke="rgba(255,255,255,0.07)" strokeWidth="8" fill="none" />
+                            <motion.circle
+                                cx="64" cy="64" r="58"
+                                stroke="#10b981"
+                                strokeWidth="8"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeDasharray={circumference}
+                                initial={{ strokeDashoffset: circumference }}
+                                animate={{ strokeDashoffset: circumference - (circumference * percentage) / 100 }}
+                                transition={{ duration: 1.5, ease: 'easeOut', delay: 0.3 }}
+                            />
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <span className="text-2xl font-black text-white">{percentage}%</span>
+                            <span className="text-[9px] text-slate-400 uppercase tracking-wide">Paid</span>
+                        </div>
                     </div>
-                    <span className="text-xs text-slate-400">AMC (Save 20%)</span>
+
+                    <div className="flex-1 space-y-3 min-w-0">
+                        <div className="grid grid-cols-2 gap-2">
+                            <div className="bg-slate-900/60 p-2 rounded-lg border border-white/5">
+                                <div className="text-[9px] text-slate-500 uppercase tracking-wider mb-0.5">Paid</div>
+                                <div className="text-emerald-400 font-mono font-bold text-sm truncate">
+                                    {totalCost > 0 ? `₹${paidCost.toLocaleString('en-IN')}` : '—'}
+                                </div>
+                            </div>
+                            <div className="bg-slate-900/60 p-2 rounded-lg border border-white/5">
+                                <div className="text-[9px] text-slate-500 uppercase tracking-wider mb-0.5">Due on Launch</div>
+                                <div className="text-white font-mono font-bold text-sm truncate">
+                                    {totalCost > 0 ? `₹${remainingCost.toLocaleString('en-IN')}` : '—'}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="space-y-1.5">
+                            {breakdown.map((item, i) => (
+                                <div key={i} className="flex items-center gap-2">
+                                    <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${item.color}`} />
+                                    <span className="text-[10px] text-slate-400 truncate flex-1">{item.label}</span>
+                                    <span className="text-[10px] font-mono text-slate-300 shrink-0">
+                                        {item.amount > 0 ? `₹${item.amount.toLocaleString('en-IN')}` : 'Free'}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {totalCost > 0 && (
+                            <p className="text-[9px] text-amber-400/70 italic flex items-center gap-1">
+                                <span className="w-1 h-1 bg-amber-400 rounded-full animate-pulse shrink-0" />
+                                Balance must be cleared before Stage 7.
+                            </p>
+                        )}
+
+                        <button
+                            onClick={() => router.push('/checkout')}
+                            className="w-full py-2 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold uppercase tracking-widest text-xs rounded-lg shadow-[0_0_16px_rgba(16,185,129,0.25)] flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                        >
+                            <CreditCard size={12} />
+                            {totalCost > 0 ? 'Pay Remaining' : 'Build Your Stack'}
+                        </button>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
