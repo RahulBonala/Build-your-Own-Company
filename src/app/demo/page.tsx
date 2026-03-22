@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBuilderStore } from '@/store/builderStore';
-import { ArrowLeft, Lock, Zap, ChevronRight, ShoppingCart, Settings } from 'lucide-react';
+import { ArrowLeft, Lock, Zap, ChevronRight, Settings } from 'lucide-react';
 import PageTransition from '@/components/PageTransition';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -58,6 +58,8 @@ export default function DemoPage() {
     const [streamingCode, setStreamingCode] = useState('');
     const [genStepLabel, setGenStepLabel] = useState(GEN_STEPS[0]);
     const [genProgress, setGenProgress] = useState(0);
+    const [rateLimitError, setRateLimitError] = useState(false);
+    const [rateLimitCountdown, setRateLimitCountdown] = useState(0);
 
     // ── Continue button logic
     const isFullyConfigured = Object.values(selections).every(Boolean);
@@ -187,6 +189,24 @@ export default function DemoPage() {
     }
 
     async function startGeneration() {
+        setRateLimitError(false);
+
+        // Check sessionStorage cache first — avoids burning an API call on rebuild
+        const cacheKey = `byoc_demo_${idea.slice(0, 40)}`;
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) {
+            setGeneratedHtml(cached);
+            setPhase('preview');
+            let i = 0;
+            const CHUNK = 80;
+            const codeInterval = setInterval(() => {
+                if (i >= cached.length) { clearInterval(codeInterval); setStreamingCode(cached); return; }
+                setStreamingCode(cached.slice(0, i + CHUNK));
+                i += CHUNK;
+            }, 10);
+            return;
+        }
+
         setPhase('generating');
         setGenProgress(0);
         let stepIdx = 0;
@@ -203,27 +223,40 @@ export default function DemoPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ idea, summary, selections }),
             });
+
+            clearInterval(stepInterval);
+
+            // Rate limit — go back to chat phase with countdown
+            if (res.status === 429) {
+                setPhase('chat');
+                setRateLimitError(true);
+                setRateLimitCountdown(60);
+                const countdown = setInterval(() => {
+                    setRateLimitCountdown(prev => {
+                        if (prev <= 1) { clearInterval(countdown); setRateLimitError(false); return 0; }
+                        return prev - 1;
+                    });
+                }, 1000);
+                return;
+            }
+
             if (!res.ok) throw new Error('API Error');
             const data = await res.json();
-            clearInterval(stepInterval);
+
             setGenProgress(100);
+            const html: string = data.html || getErrorHtml();
 
-            let html: string = data.html || getErrorHtml();
+            // Cache in sessionStorage — free re-renders with zero API calls
+            try { sessionStorage.setItem(cacheKey, html); } catch { /* storage full */ }
+
             setGeneratedHtml(html);
-
-            // Small delay so progress bar hits 100% visually
             await new Promise(r => setTimeout(r, 400));
             setPhase('preview');
 
-            // Stream code character by character
             let i = 0;
             const CHUNK = 80;
             const codeInterval = setInterval(() => {
-                if (i >= html.length) {
-                    clearInterval(codeInterval);
-                    setStreamingCode(html);
-                    return;
-                }
+                if (i >= html.length) { clearInterval(codeInterval); setStreamingCode(html); return; }
                 setStreamingCode(html.slice(0, i + CHUNK));
                 i += CHUNK;
             }, 14);
@@ -603,6 +636,26 @@ export default function DemoPage() {
                     )}
                     <div ref={messagesEndRef} />
                 </div>
+
+                {/* Rate limit warning banner */}
+                <AnimatePresence>
+                    {rateLimitError && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0 }}
+                            className="mx-4 mb-2 px-4 py-3 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-center justify-between gap-3 shrink-0"
+                        >
+                            <div>
+                                <p className="text-amber-300 text-sm font-bold">Free API quota reached</p>
+                                <p className="text-amber-400/70 text-xs mt-0.5">
+                                    Gemini free tier limit hit. Auto-retry in {rateLimitCountdown}s — or switch to Anthropic API for unlimited generation.
+                                </p>
+                            </div>
+                            <div className="text-2xl font-black text-amber-400 font-mono shrink-0">{rateLimitCountdown}s</div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 {/* Generate button — appears when all 5 questions answered */}
                 <AnimatePresence>

@@ -15,6 +15,7 @@ export default function TutorialPage() {
     const [step, setStep] = useState(0);
 
     useEffect(() => {
+        // eslint-disable-next-line
         setHydrated(true);
     }, []);
 
