@@ -26,6 +26,14 @@ const GEN_STEPS = [
     'Almost ready...',
 ];
 
+const SUGGESTIONS: Record<number, string[]> = {
+    1: ['Founders & Creators', 'Enterprise B2B', 'Gen Z Consumers', 'Freelancers', 'Small Businesses'],
+    2: ['A: Clean & Minimal', 'B: Bold & Energetic', 'C: Premium & Dark'],
+    3: ['Hero, Features, Pricing', 'Waitlist, How it Works, FAQ', 'Hero, Testimonials, CTA'],
+    4: ['Sign up free', 'Book a demo', 'Join waitlist', 'Get Early Access'],
+    5: ['AI Automation', 'One-click deploy', 'Real-time sync', 'Insanely fast performance', 'Community driven'],
+};
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function DemoPage() {
@@ -653,6 +661,28 @@ export default function DemoPage() {
                                 </p>
                             </div>
                             <div className="text-2xl font-black text-amber-400 font-mono shrink-0">{rateLimitCountdown}s</div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                {/* Suggestions */}
+                <AnimatePresence>
+                    {!isDone && !isBusy && SUGGESTIONS[questionIndex] && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            className="px-4 pb-3 flex gap-2 overflow-x-auto no-scrollbar shrink-0"
+                        >
+                            {SUGGESTIONS[questionIndex].map((sug, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => sendMessage(sug)}
+                                    className="px-3 py-1.5 whitespace-nowrap bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs text-slate-300 hover:text-white transition-colors cursor-pointer shrink-0"
+                                >
+                                    {sug}
+                                </button>
+                            ))}
                         </motion.div>
                     )}
                 </AnimatePresence>
