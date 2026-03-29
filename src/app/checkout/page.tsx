@@ -16,7 +16,7 @@ export default function CheckoutPage() {
     const [isProcessing, setIsProcessing] = useState(false);
 
     useEffect(() => {
-        // eslint-disable-next-line
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard: must run once on mount to detect client rendering
         setHydrated(true);
     }, []);
 

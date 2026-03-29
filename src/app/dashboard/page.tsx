@@ -2,13 +2,20 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { useBuilderStore } from '@/store/builderStore';
 import PipelineMap from '@/components/dashboard/PipelineMap';
 import SystemInternals from '@/components/dashboard/SystemInternals';
 import FinancialFuel from '@/components/dashboard/FinancialFuel';
-import LiveTelemetry from '@/components/dashboard/LiveTelemetry';
 import CommunicationHub from '@/components/dashboard/CommunicationHub';
 import PageTransition from '@/components/PageTransition';
+
+const LiveTelemetry = dynamic(() => import('@/components/dashboard/LiveTelemetry'), {
+    ssr: false,
+    loading: () => (
+        <div className="h-[350px] bg-slate-800/50 rounded-2xl animate-pulse" />
+    ),
+});
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -16,7 +23,7 @@ export default function DashboardPage() {
     const [hydrated, setHydrated] = useState(false);
 
     useEffect(() => {
-        // eslint-disable-next-line
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard: must run once on mount to detect client rendering
         setHydrated(true);
     }, []);
 

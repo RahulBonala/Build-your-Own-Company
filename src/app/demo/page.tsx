@@ -26,6 +26,14 @@ const GEN_STEPS = [
     'Almost ready...',
 ];
 
+const SUGGESTIONS: Record<number, string[]> = {
+    1: ['Founders & Creators', 'Enterprise B2B', 'Gen Z Consumers', 'Freelancers', 'Small Businesses'],
+    2: ['A: Clean & Minimal', 'B: Bold & Energetic', 'C: Premium & Dark'],
+    3: ['Hero, Features, Pricing', 'Waitlist, How it Works, FAQ', 'Hero, Testimonials, CTA'],
+    4: ['Sign up free', 'Book a demo', 'Join waitlist', 'Get Early Access'],
+    5: ['AI Automation', 'One-click deploy', 'Real-time sync', 'Insanely fast performance', 'Community driven'],
+};
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function DemoPage() {
@@ -88,6 +96,7 @@ export default function DemoPage() {
     useEffect(() => {
         if (!hydrated || !idea) return;
         bootPixel();
+    // bootPixel is intentionally excluded — only trigger on hydration/idea change
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hydrated, idea]);
 
@@ -657,6 +666,28 @@ export default function DemoPage() {
                     )}
                 </AnimatePresence>
 
+                {/* Suggestions */}
+                <AnimatePresence>
+                    {!isDone && !isBusy && SUGGESTIONS[questionIndex] && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            className="px-4 pb-3 flex gap-2 overflow-x-auto no-scrollbar shrink-0"
+                        >
+                            {SUGGESTIONS[questionIndex].map((sug, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => sendMessage(sug)}
+                                    className="px-3 py-1.5 whitespace-nowrap bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs text-slate-300 hover:text-white transition-colors cursor-pointer shrink-0"
+                                >
+                                    {sug}
+                                </button>
+                            ))}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
                 {/* Generate button — appears when all 5 questions answered */}
                 <AnimatePresence>
                     {isDone && (
@@ -691,8 +722,9 @@ export default function DemoPage() {
                                 }
                             }}
                             placeholder="Type your answer and press Enter..."
+                            aria-label="Chat message to Pixel AI"
                             disabled={isBusy}
-                            className="flex-1 bg-white/5 border border-glass-border rounded-xl px-4 py-3 text-sm text-silver placeholder-gray-600 outline-none focus:border-cyber-cyan/40 transition-colors disabled:opacity-40"
+                            className="flex-1 bg-white/5 border border-glass-border rounded-xl px-4 py-3 text-sm text-silver placeholder-gray-500 outline-none focus:border-cyber-cyan/40 transition-colors disabled:opacity-40"
                         />
                         <button
                             onClick={() => sendMessage(input)}

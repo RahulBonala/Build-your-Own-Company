@@ -97,16 +97,21 @@ export default function LandingPage() {
         <form onSubmit={handleSubmit} className="w-full relative group max-w-lg mt-8">
           <div className={`absolute -inset-1 bg-gradient-to-r from-cyber-cyan to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 ${isWarping ? 'opacity-100 duration-75' : ''}`}></div>
           <div className="relative flex items-center bg-obsidian border border-glass-border rounded-lg p-1">
+            <label htmlFor="idea-input" className="sr-only">
+              Describe your business idea
+            </label>
             <input
+              id="idea-input"
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="What is your idea? (e.g. Tinder for Cats)"
-              className="w-full bg-transparent text-silver placeholder-gray-600 px-6 py-4 text-xl outline-none font-light selection:bg-cyber-cyan selection:text-obsidian"
+              className="w-full bg-transparent text-silver placeholder-gray-500 px-6 py-4 text-xl outline-none font-light selection:bg-cyber-cyan selection:text-obsidian"
               autoFocus
             />
             <button
               type="submit"
+              aria-label="Submit your idea"
               className="p-3 bg-cyber-cyan/10 hover:bg-cyber-cyan/20 text-cyber-cyan rounded-md transition-colors mr-1 cursor-pointer"
             >
               <ArrowRight size={24} />
