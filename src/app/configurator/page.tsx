@@ -18,7 +18,7 @@ export default function ConfiguratorPage() {
     const isReady = Object.values(selections).every(Boolean);
 
     useEffect(() => {
-        // eslint-disable-next-line
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard: must run once on mount to detect client rendering
         setHydrated(true);
     }, []);
 

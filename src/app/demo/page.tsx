@@ -96,6 +96,7 @@ export default function DemoPage() {
     useEffect(() => {
         if (!hydrated || !idea) return;
         bootPixel();
+    // bootPixel is intentionally excluded — only trigger on hydration/idea change
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hydrated, idea]);
 
@@ -721,8 +722,9 @@ export default function DemoPage() {
                                 }
                             }}
                             placeholder="Type your answer and press Enter..."
+                            aria-label="Chat message to Pixel AI"
                             disabled={isBusy}
-                            className="flex-1 bg-white/5 border border-glass-border rounded-xl px-4 py-3 text-sm text-silver placeholder-gray-600 outline-none focus:border-cyber-cyan/40 transition-colors disabled:opacity-40"
+                            className="flex-1 bg-white/5 border border-glass-border rounded-xl px-4 py-3 text-sm text-silver placeholder-gray-500 outline-none focus:border-cyber-cyan/40 transition-colors disabled:opacity-40"
                         />
                         <button
                             onClick={() => sendMessage(input)}

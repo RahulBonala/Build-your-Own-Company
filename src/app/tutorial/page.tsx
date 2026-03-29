@@ -15,7 +15,7 @@ export default function TutorialPage() {
     const [step, setStep] = useState(0);
 
     useEffect(() => {
-        // eslint-disable-next-line
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard: must run once on mount to detect client rendering
         setHydrated(true);
     }, []);
 
@@ -55,6 +55,9 @@ export default function TutorialPage() {
         <PageTransition>
             <div
                 onClick={handleFastForward}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleFastForward(); }}
+                role="button"
+                tabIndex={0}
                 className="w-full h-screen bg-obsidian flex flex-col items-center justify-center p-8 text-center text-silver relative overflow-hidden cursor-pointer"
             >
                 {/* Back Button */}
