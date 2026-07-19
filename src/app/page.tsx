@@ -50,7 +50,10 @@ export default function LandingPage() {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center bg-obsidian text-silver">
+    <div
+      ref={containerRef}
+      className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center bg-obsidian text-silver"
+    >
       {/* Background Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
@@ -72,7 +75,7 @@ export default function LandingPage() {
             <motion.div
               initial={{ scale: 1, opacity: 0 }}
               animate={{ scale: 30, opacity: 1 }}
-              transition={{ duration: 1.2, ease: "anticipate" }}
+              transition={{ duration: 1.2, ease: 'anticipate' }}
               className="text-cyber-cyan text-4xl font-bold tracking-[1em] whitespace-nowrap"
             >
               WARPING...
@@ -84,18 +87,25 @@ export default function LandingPage() {
       {/* Main Content */}
       <motion.div
         className="relative z-10 flex flex-col items-center gap-8 w-full max-w-2xl px-4"
-        animate={isWarping ? { scale: 0.8, opacity: 0, filter: 'blur(10px)' } : { scale: 1, opacity: 1, filter: 'blur(0px)' }}
+        animate={
+          isWarping
+            ? { scale: 0.8, opacity: 0, filter: 'blur(10px)' }
+            : { scale: 1, opacity: 1, filter: 'blur(0px)' }
+        }
         transition={{ duration: 0.8 }}
       >
         <h1 className="text-4xl md:text-6xl font-black text-center text-white tracking-tight leading-tight">
-          Don&apos;t just hire an agency.<br />
+          Don&apos;t just hire an agency.
+          <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan to-purple-500">
             Build your company.
           </span>
         </h1>
 
         <form onSubmit={handleSubmit} className="w-full relative group max-w-lg mt-8">
-          <div className={`absolute -inset-1 bg-gradient-to-r from-cyber-cyan to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 ${isWarping ? 'opacity-100 duration-75' : ''}`}></div>
+          <div
+            className={`absolute -inset-1 bg-gradient-to-r from-cyber-cyan to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 ${isWarping ? 'opacity-100 duration-75' : ''}`}
+          ></div>
           <div className="relative flex items-center bg-obsidian border border-glass-border rounded-lg p-1">
             <label htmlFor="idea-input" className="sr-only">
               Describe your business idea

@@ -29,7 +29,10 @@ export async function POST(req: NextRequest) {
 
     if (!parsed.success) {
       return NextResponse.json(
-        { error: 'VALIDATION_ERROR', message: parsed.error.issues[0]?.message ?? 'Invalid request body' },
+        {
+          error: 'VALIDATION_ERROR',
+          message: parsed.error.issues[0]?.message ?? 'Invalid request body',
+        },
         { status: 400 }
       );
     }
@@ -57,21 +60,18 @@ Keep each question under 35 words. One emoji max. Tailor to the specific idea.`;
       parts: [{ text: m.content }],
     }));
 
-    const response = await fetch(
-      `${env.GEMINI_API_URL}?key=${env.GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: systemInstruction }] },
-          contents: geminiContents,
-          generationConfig: {
-            maxOutputTokens: 200,
-            temperature: 0.8,
-          },
-        }),
-      }
-    );
+    const response = await fetch(`${env.GEMINI_API_URL}?key=${env.GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system_instruction: { parts: [{ text: systemInstruction }] },
+        contents: geminiContents,
+        generationConfig: {
+          maxOutputTokens: 200,
+          temperature: 0.8,
+        },
+      }),
+    });
 
     if (response.status === 429) {
       return NextResponse.json(

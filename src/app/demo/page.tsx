@@ -327,7 +327,7 @@ export default function DemoPage() {
 </head>
 <body class="bg-slate-900 text-white font-sans antialiased min-h-screen flex flex-col items-center justify-center p-8 text-center">
     <div class="max-w-2xl reveal border border-slate-800 bg-slate-800/50 p-12 rounded-3xl shadow-2xl backdrop-blur-sm">
-        <div class="w-16 h-16 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl mx-auto mb-6 flex items-center justify-center text-2xl shadow-lg shadow-cyan-500/20">🚀</div>
+        <div class="w-16 h-16 bg-gradient-to-br from-cyber-cyan to-[#c2410c] rounded-2xl mx-auto mb-6 flex items-center justify-center text-2xl shadow-lg shadow-cyber-cyan/20">🚀</div>
         <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
             ${idea || 'Waitlist Startup'}
         </h1>
@@ -335,7 +335,7 @@ export default function DemoPage() {
             API Rate Limit Reached!<br/><br/>But don't worry, this fallback page proves that our split-screen preview, layout frames, and code protection mechanisms are fully functional.
         </p>
         <div class="flex items-center justify-center gap-4">
-            <button class="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-lg transition-colors">Join Waitlist</button>
+            <button class="px-6 py-3 bg-cyber-cyan hover:bg-white text-obsidian font-bold rounded-lg transition-colors">Join Waitlist</button>
             <button class="px-6 py-3 bg-white/10 hover:bg-white/20 font-semibold rounded-lg transition-colors border border-white/10">Learn More</button>
         </div>
     </div>
@@ -430,7 +430,7 @@ export default function DemoPage() {
     return (
       <div className="w-full h-screen bg-obsidian flex flex-col overflow-hidden">
         {/* Top bar */}
-        <div className="h-11 bg-slate-950 border-b border-glass-border flex items-center justify-between px-4 shrink-0 z-30">
+        <div className="h-11 bg-obsidian border-b border-glass-border flex items-center justify-between px-4 shrink-0 z-30">
           <div className="flex items-center gap-3">
             <span className="text-cyber-cyan font-black text-xs font-mono tracking-widest">
               BYOC DEMO
@@ -495,7 +495,7 @@ export default function DemoPage() {
             onCut={(e) => e.preventDefault()}
           >
             {/* Code panel header */}
-            <div className="h-9 bg-slate-950/80 border-b border-glass-border flex items-center justify-between px-3 shrink-0">
+            <div className="h-9 bg-obsidian/80 border-b border-glass-border flex items-center justify-between px-3 shrink-0">
               <span className="text-[10px] text-gray-500 font-mono">index.html</span>
               <div className="flex items-center gap-1.5">
                 <Lock size={10} className="text-amber-400" />
@@ -542,7 +542,7 @@ export default function DemoPage() {
               </pre>
 
               {/* Hover protection overlay with tooltip */}
-              <div className="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
+              <div className="absolute inset-0 bg-obsidian/0 group-hover:bg-obsidian/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
                 <div className="flex items-center gap-2 bg-slate-900/95 border border-amber-500/30 px-4 py-2 rounded-lg shadow-xl">
                   <Lock size={14} className="text-amber-400" />
                   <span className="text-xs text-amber-300 font-mono">
@@ -601,7 +601,7 @@ export default function DemoPage() {
     <PageTransition>
       <div className="w-full h-screen bg-obsidian flex flex-col overflow-hidden text-silver">
         {/* Header */}
-        <div className="h-14 bg-slate-950/80 border-b border-glass-border flex items-center justify-between px-4 shrink-0">
+        <div className="h-14 bg-obsidian/80 border-b border-glass-border flex items-center justify-between px-4 shrink-0">
           <div className="flex items-center gap-3">
             <button
               onClick={() => router.push('/configurator')}
@@ -761,7 +761,7 @@ export default function DemoPage() {
 
         {/* Input bar */}
         {!isDone && (
-          <div className="px-4 py-3 border-t border-glass-border bg-slate-950/60 shrink-0 flex gap-2">
+          <div className="px-4 py-3 border-t border-glass-border bg-obsidian/60 shrink-0 flex gap-2">
             <input
               ref={inputRef}
               value={input}

@@ -21,7 +21,7 @@ export default function FinancialFuel() {
   const breakdown: { label: string; amount: number; color: string }[] = [];
   if (selections.design && PRICING_DATA.design[selections.design]) {
     const d = PRICING_DATA.design[selections.design];
-    breakdown.push({ label: `Design · ${d.label}`, amount: d.price, color: 'bg-cyan-500' });
+    breakdown.push({ label: `Design · ${d.label}`, amount: d.price, color: 'bg-cyber-cyan' });
   }
   if (selections.database && PRICING_DATA.database[selections.database]) {
     const d = PRICING_DATA.database[selections.database];
@@ -65,7 +65,7 @@ export default function FinancialFuel() {
           <p className="text-slate-500 text-sm">No modules selected yet.</p>
           <button
             onClick={() => router.push('/configurator')}
-            className="text-xs text-cyan-400 hover:text-cyan-300 underline underline-offset-2 cursor-pointer"
+            className="text-xs text-cyber-cyan hover:text-cyber-cyan underline underline-offset-2 cursor-pointer"
           >
             Go to configurator →
           </button>

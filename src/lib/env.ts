@@ -2,8 +2,7 @@ function requireEnv(name: string): string {
   const value = process.env[name];
   if (!value) {
     throw new Error(
-      `Missing ${name} environment variable. ` +
-        'Copy .env.example to .env.local and add your key.'
+      `Missing ${name} environment variable. ` + 'Copy .env.example to .env.local and add your key.'
     );
   }
   return value;

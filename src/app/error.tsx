@@ -20,9 +20,7 @@ export default function Error({
         <div className="w-16 h-16 mx-auto rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-3xl">
           !
         </div>
-        <h2 className="text-2xl font-black text-white tracking-tight">
-          Something went wrong
-        </h2>
+        <h2 className="text-2xl font-black text-white tracking-tight">Something went wrong</h2>
         <p className="text-slate-400 text-sm leading-relaxed">
           An unexpected error occurred. Please try again or return to the home page.
         </p>

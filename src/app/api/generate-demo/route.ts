@@ -32,7 +32,10 @@ export async function POST(req: NextRequest) {
 
     if (!parsed.success) {
       return NextResponse.json(
-        { error: 'VALIDATION_ERROR', message: parsed.error.issues[0]?.message ?? 'Invalid request body' },
+        {
+          error: 'VALIDATION_ERROR',
+          message: parsed.error.issues[0]?.message ?? 'Invalid request body',
+        },
         { status: 400 }
       );
     }
@@ -56,24 +59,24 @@ OUTPUT RULES:
 
 Start with <!DOCTYPE html> immediately.`;
 
-    const response = await fetch(
-      `${env.GEMINI_API_URL}?key=${env.GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: {
-            maxOutputTokens: 3500,
-            temperature: 0.7,
-          },
-        }),
-      }
-    );
+    const response = await fetch(`${env.GEMINI_API_URL}?key=${env.GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: {
+          maxOutputTokens: 3500,
+          temperature: 0.7,
+        },
+      }),
+    });
 
     if (response.status === 429) {
       return NextResponse.json(
-        { error: 'RATE_LIMIT', message: 'Free API quota reached. Please wait 60 seconds and try again.' },
+        {
+          error: 'RATE_LIMIT',
+          message: 'Free API quota reached. Please wait 60 seconds and try again.',
+        },
         { status: 429 }
       );
     }
