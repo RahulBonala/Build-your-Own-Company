@@ -453,7 +453,7 @@ export default function DemoPage() {
 
                     {/* ── RIGHT: Protected Code Panel ── */}
                     <div
-                        className="w-[40%] flex flex-col bg-[#020817] overflow-hidden"
+                        className="w-[40%] flex flex-col bg-obsidian overflow-hidden"
                         onContextMenu={e => e.preventDefault()}
                         onCopy={e => e.preventDefault()}
                         onCut={e => e.preventDefault()}
@@ -584,7 +584,7 @@ export default function DemoPage() {
                         <div className="w-24 h-1 bg-white/10 rounded-full overflow-hidden">
                             <motion.div
                                 className="h-full rounded-full"
-                                style={{ background: isDone ? '#22c55e' : '#22d3ee' }}
+                                style={{ background: isDone ? '#22c55e' : '#ff6b1a' }}
                                 animate={{ width: `${progress}%` }}
                                 transition={{ duration: 0.3, ease: 'easeOut' }}
                             />

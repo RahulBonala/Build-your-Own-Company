@@ -80,18 +80,18 @@ export default function LiveTelemetry() {
                     <AreaChart data={data}>
                         <defs>
                             <linearGradient id="colorUsers" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
-                                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                                <stop offset="5%" stopColor="#ff6b1a" stopOpacity={0.3} />
+                                <stop offset="95%" stopColor="#ff6b1a" stopOpacity={0} />
                             </linearGradient>
                         </defs>
                         <Tooltip
-                            contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', color: '#fff' }}
-                            itemStyle={{ color: '#3b82f6' }}
+                            contentStyle={{ backgroundColor: '#19140f', borderColor: '#2a2119', color: '#fbf7f0' }}
+                            itemStyle={{ color: '#ff6b1a' }}
                         />
                         <Area
                             type="monotone"
                             dataKey="users"
-                            stroke="#3b82f6"
+                            stroke="#ff6b1a"
                             strokeWidth={2}
                             fillOpacity={1}
                             fill="url(#colorUsers)"

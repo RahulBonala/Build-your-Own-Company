@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Space_Grotesk } from 'next/font/google';
+import { Fraunces, Inter } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({
@@ -8,8 +8,8 @@ const inter = Inter({
   display: 'swap',
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: '--font-space-grotesk',
+const fraunces = Fraunces({
+  variable: '--font-fraunces',
   subsets: ['latin'],
   display: 'swap',
 });
@@ -17,7 +17,7 @@ const spaceGrotesk = Space_Grotesk({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0f172a',
+  themeColor: '#19140f',
 };
 
 export const metadata: Metadata = {
@@ -58,7 +58,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} antialiased bg-obsidian text-silver`}
+        className={`${inter.variable} ${fraunces.variable} antialiased bg-obsidian text-silver`}
       >
         <a
           href="#main-content"

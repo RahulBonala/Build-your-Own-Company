@@ -73,7 +73,7 @@ export default function FinancialFuel() {
                             <circle cx="64" cy="64" r="58" stroke="rgba(255,255,255,0.07)" strokeWidth="8" fill="none" />
                             <motion.circle
                                 cx="64" cy="64" r="58"
-                                stroke="#10b981"
+                                stroke="#34d399"
                                 strokeWidth="8"
                                 fill="none"
                                 strokeLinecap="round"

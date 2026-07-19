@@ -8,7 +8,7 @@ export default function GlobalError({
 }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0, background: '#0f172a', color: '#e2e8f0' }}>
+      <body style={{ margin: 0, background: '#19140f', color: '#efe7da' }}>
         <div
           style={{
             minHeight: '100vh',
@@ -31,8 +31,8 @@ export default function GlobalError({
             onClick={reset}
             style={{
               padding: '0.75rem 1.5rem',
-              background: '#22d3ee',
-              color: '#0f172a',
+              background: '#ff6b1a',
+              color: '#19140f',
               border: 'none',
               borderRadius: '0.5rem',
               fontWeight: 700,

@@ -9,15 +9,15 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                obsidian: "#0f172a", // Deep Slate (was #0B0C10)
-                silver: "#e2e8f0",   // Slate-200 (was #C5C6C7)
-                "cyber-cyan": "#22d3ee", // Cyan-400 (was #66FCF1)
+                obsidian: "#19140f", // Warm ink (signature system)
+                silver: "#efe7da",   // Warm off-white (signature system)
+                "cyber-cyan": "#ff6b1a", // Signature orange (Rahul Orange)
                 "glass-border": "rgba(255, 255, 255, 0.1)",
                 "glass-bg": "rgba(255, 255, 255, 0.05)",
             },
             fontFamily: {
                 sans: ["var(--font-inter)"],
-                heading: ["var(--font-space-grotesk)"],
+                heading: ["var(--font-fraunces)"],
             },
         },
     },
