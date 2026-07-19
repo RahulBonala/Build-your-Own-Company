@@ -41,8 +41,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Build Your Own Company (BYOC)',
-    description:
-      'Build your company with our futuristic agency construction kit.',
+    description: 'Build your company with our futuristic agency construction kit.',
   },
   robots: {
     index: true,
