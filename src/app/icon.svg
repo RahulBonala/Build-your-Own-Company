@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Build Your Own Company">
+  <!-- Rahul Mark System v1 — Ink pair (#19140f field / #ff6b1a glyph, 6.4:1)
+       The construction kit: modules chosen and stacked into a tower. Ink field
+       matches the app's obsidian surface (themeColor #19140f) and keeps it
+       clearly distinct from the sibling BYOC product's paper tile. -->
+  <rect width="512" height="512" rx="114" fill="#19140f"/>
+  <rect x="6" y="6" width="500" height="500" rx="108" fill="none" stroke="#ff6b1a" stroke-opacity="0.24" stroke-width="6"/>
+  <svg x="116" y="116" width="280" height="280" viewBox="0 0 24 24" fill="none" stroke="#ff6b1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- base and middle modules: stroked -->
+    <rect x="3" y="16" width="18" height="4.8" rx="1.6"/>
+    <rect x="5.5" y="10.1" width="13" height="4.8" rx="1.6"/>
+    <!-- the module you place last: the one filled element -->
+    <rect x="8" y="4.2" width="8" height="4.8" rx="1.6" fill="#ff6b1a" stroke="none"/>
+  </svg>
+</svg>
